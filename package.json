@@ -4,13 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "server": "node server",
-    "client": "node client"
+    "server": "node dist/server",
+    "client": "node dist/client",
+    "build": "npx tsc"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^20.12.12",
     "typescript": "^5.4.5"
   }
 }
