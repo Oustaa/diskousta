@@ -2,6 +2,7 @@ const net = require("node:net");
 const readline = require("node:readline/promises");
 const { stdin: input, stdout: output } = require("node:process");
 
+// @ts-expect-error this is not  a fucking error
 const Client = require("./Client");
 
 const rl = readline.createInterface({ input, output });
