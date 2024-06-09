@@ -12,6 +12,10 @@ server.on("connection", () => {
   console.log("A new connection has been established");
 });
 
+server.on("message", (data: { type: "login"; data?: {} }) => {
+  console.log(data);
+});
+
 server.listen(PORT, HOST, () => {
   console.log(server.address());
 });

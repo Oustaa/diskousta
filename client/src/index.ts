@@ -2,12 +2,11 @@ const net = require("node:net");
 const readline = require("node:readline/promises");
 const { stdin: input, stdout: output } = require("node:process");
 
-// @ts-expect-error this is not  a fucking error
-const Client = require("./Client");
+const ClientModule = require("./Client");
 
 const rl = readline.createInterface({ input, output });
 
-const client = Client.getClient();
+const client = ClientModule.Client.getClient();
 
 const loginCredentials = async (): Promise<{
   email: string;
@@ -17,6 +16,9 @@ const loginCredentials = async (): Promise<{
 };
 
 (async () => {
+  const socket = net.createConnection({
+    port: 8000,
+  });
   let answer: number = -1;
   console.log("#################### WELCOME TO DISKOSTA ####################");
   console.log(`> 0 to quit\n> 1 CREATE ACCOUNT\n> 2 LOGIN TO YOUR ACCOUNT`);
@@ -29,12 +31,15 @@ const loginCredentials = async (): Promise<{
 
     switch (answer) {
       case 1:
-        await client.login(await loginCredentials());
+        const username = await rl.question("> please enter your username: ");
+        const password = await rl.question("> please enter your password: ");
+        await client.login({ username, password });
         break;
       case 2:
         await client.register();
         break;
     }
   }
+  process.exit(0);
 })();
 

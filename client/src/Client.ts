@@ -14,8 +14,7 @@ const moveCursor: (dx: number, dy: number) => Promise<boolean> = (dx, dy) => {
   });
 };
 
-// a singleton emplementation of a terminal instance to handle the user input
-// @ts-expect-error this is not a fucking error
+// a singleton implementation of a terminal instance to handle the user input
 class Client {
   private static _instance: Client | null = null;
   public username: string;
@@ -43,5 +42,5 @@ class Client {
   public logout(): void {}
 }
 
-module.exports = Client;
+module.exports.Client = Client;
 
