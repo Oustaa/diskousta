@@ -1,8 +1,9 @@
 const net = require("node:net");
 const readline = require("node:readline/promises");
 const { stdin: input, stdout: output } = require("node:process");
+const { ask } = require("./helpers/index");
 
-const ClientModule = require("./Client");
+const ClientModule = require("./utils/Client");
 
 const rl = readline.createInterface({ input, output });
 
@@ -16,30 +17,29 @@ const loginCredentials = async (): Promise<{
 };
 
 (async () => {
-  const socket = net.createConnection({
-    port: 8000,
-  });
+  // const socket = net.createConnection({
+  //   port: 8000,
+  // });
   let answer: number = -1;
-  console.log("#################### WELCOME TO DISKOSTA ####################");
-  console.log(`> 0 to quit\n> 1 CREATE ACCOUNT\n> 2 LOGIN TO YOUR ACCOUNT`);
-  while (answer !== 0) {
-    answer = Number(
-      await rl.question(
-        "> please Enter the number correspond to acction want to preform: "
-      )
-    );
 
-    switch (answer) {
-      case 1:
-        const username = await rl.question("> please enter your username: ");
-        const password = await rl.question("> please enter your password: ");
-        await client.login({ username, password });
-        break;
-      case 2:
-        await client.register();
-        break;
-    }
-  }
+  answer = await ask({
+    type: "list",
+    choices: [
+      {
+        name: "Log in",
+        value: 0,
+        description: "Login to your account",
+      },
+      {
+        name: "Sign up",
+        value: 1,
+        description: "Create a new account",
+      },
+    ],
+  });
+
+  console.log(answer);
+
   process.exit(0);
 })();
 
