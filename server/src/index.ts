@@ -8,12 +8,11 @@ const CONNECTED_USERS = {};
 
 const server = net.createServer();
 
-server.on("connection", () => {
+server.on("connection", (socket: any) => {
+  socket.on("data", (data: Buffer) => {
+    console.log(JSON.parse(data.toString("utf-8")));
+  });
   console.log("A new connection has been established");
-});
-
-server.on("message", (data: { type: "login"; data?: {} }) => {
-  console.log(data);
 });
 
 server.listen(PORT, HOST, () => {

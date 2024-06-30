@@ -1,10 +1,10 @@
-const { input: Inp, select, Separator } = require("@inquirer/prompts");
+const { input, select } = require("@inquirer/prompts");
 
 type ChoicesValue = {
   name: string;
   value: string | number;
-  description: string;
-  disabled: string | boolean;
+  description?: string;
+  disabled?: string | boolean;
 };
 
 type AskProps = {
@@ -25,7 +25,7 @@ const askQuestion = async ({ type, choices }: AskProps) => {
       choices,
     });
   } else {
-    answer = await Inp({ message: "Enter your name" });
+    answer = await input({ message: "Enter your name" });
   }
 
   return answer;
