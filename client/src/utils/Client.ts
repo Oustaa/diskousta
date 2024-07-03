@@ -2,18 +2,25 @@ const fs = require("node:fs");
 const path = require("node:path");
 const net = require("node:net");
 
+const { PageRegistry } = require("./pages/PageRegistry");
+
 // a singleton implementation of a terminal instance to handle the user input
 class Client {
   private static _instance: Client | undefined;
   public username: string | undefined;
   private token: string | undefined;
   private ClinetSocket: any | undefined;
+  private PageRegistry: InstanceType<typeof PageRegistry>;
 
-  private constructor() {}
+  private constructor(pageRegistry: InstanceType<typeof PageRegistry>) {
+    this.PageRegistry = pageRegistry;
+  }
 
-  public static getClient(): Client {
+  public static getClient(
+    pageRegistry: InstanceType<typeof PageRegistry>
+  ): Client {
     if (!Client._instance) {
-      Client._instance = new Client();
+      Client._instance = new Client(pageRegistry);
       Client._instance.__connect();
     }
 
